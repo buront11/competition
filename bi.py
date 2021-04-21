@@ -94,5 +94,5 @@ def tsne(multi_vecs, dir):
     plt.savefig(dir)
 
 if __name__=='__main__':
-    import doctest
-    doctest.testmod()
+    test = np.zeros(2)
+    print(test)
