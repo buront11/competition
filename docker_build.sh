@@ -1,4 +1,4 @@
 #!bin/sh
 
 docker build -t gpu_competition/pytorch:1.0 .
-docker run -it gpu_competition/pytorch
+docker run -it --gpus all gpu_competition/pytorch:1.0 /bin/bash
