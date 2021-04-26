@@ -10,6 +10,8 @@ import seaborn as sns
 from sklearn.manifold import TSNE
 from sklearn.datasets import fetch_openml
 
+import utils
+
 def get_input_data_type(input_data):
     """入力するデータのtypeを確認
 
@@ -59,11 +61,29 @@ def histogram_visualize(input_data,save_path,column=None,kde=False):
 def scatter_visualize(x_data,y_data,):
     pass
 
-def pair_plot(csv_paths,data_type=None):
-    if data_type is not None:
+def pair_plot(csv_paths,save_dir,data_type_low=None):
+    """pair plotを追加する関数
+
+    Parameters
+    ----------
+    csv_paths : str
+        表示させるcsvのpaths [csv path,...]
+    save_dir : str
+        保存先のdirectory
+    data_type_low : str, optional
+        csvファイルにデータの種類が存在するかどうか,存在する場合はその列の名前, by default None
+    """
+    fig = plt.figure()
+    if data_type_low is not None:
         df = utils.concat_csv(csv_paths)
+        sns.pairplot(df,data=df,hue=data_type_low)
     else:
-        df = pd.read_csv()
+        df = utils.concat_csv(csv_paths,add_type=True)
+        sns.pairplot(df,data=df,hue='type')
+
+    plt.savefig(save_dir+'/pair_plot.png')
+    fig.clf()
+    plt.close('all')
 
 def tsne(multi_vecs, dir):
     """多次元データを次元圧縮して2次元表示させる関数

@@ -1,6 +1,10 @@
+import torch
+
 import seaborn as sns
 
-import torch
+import pandas as pd
+
+import os
 
 def get_flights_dataset():
     flight_data = sns.load_dataset("flights")
@@ -31,7 +35,7 @@ def create_inout_sequences(input_data, tw):
         inout_seq.append((train_seq ,train_label))
     return inout_seq
 
-def concat_csv(csv_path,add_type=False):
+def concat_csv(csv_paths,add_type=False):
     """複数のcsvファイルを結合する関数
 
     Parameters
@@ -44,12 +48,19 @@ def concat_csv(csv_path,add_type=False):
     pandas.df
         csvファイルを結合してtypeを追加したpandasのデータフレーム
     """
-    df_concat = pd.read_csv(csv_paths[0])
-    df_concat['type'] = os.path.splitext(os.path.basename(csv_paths[0]))[0]
+    if add_type:
+        df_concat = pd.read_csv(csv_paths[0])
+        df_concat['type'] = os.path.splitext(os.path.basename(csv_paths[0]))[0]
 
-    for path in csv_paths[1:]:
-        df_add = pd.read_csv(path)
-        df_add['type'] = os.path.splitext(os.path.basename(path))[0]
-        df_concat = pd.concat([df_concat,df_add])
+        for path in csv_paths[1:]:
+            df_add = pd.read_csv(path)
+            df_add['type'] = os.path.splitext(os.path.basename(path))[0]
+            df_concat = pd.concat([df_concat,df_add])
+    else:
+        df_concat = pd.read_csv(csv_paths[0])
+
+        for path in csv_paths[1:]:
+            df_add = pd.read_csv(path)
+            df_concat = pd.concat([df_concat,df_add])
 
     return df_concat
