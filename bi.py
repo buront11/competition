@@ -59,6 +59,12 @@ def histogram_visualize(input_data,save_path,column=None,kde=False):
 def scatter_visualize(x_data,y_data,):
     pass
 
+def pair_plot(csv_paths,data_type=None):
+    if data_type is not None:
+        df = utils.concat_csv(csv_paths)
+    else:
+        df = pd.read_csv()
+
 def tsne(multi_vecs, dir):
     """多次元データを次元圧縮して2次元表示させる関数
 
