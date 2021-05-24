@@ -9,6 +9,8 @@ from sklearn.model_selection import KFold
 from tqdm import tqdm
 from collections import OrderedDict
 
+from utils import EarlyStopping
+
 class TrainBase():
     def __init__(self, model, optim, criterion, epochs):
         self.model = model
@@ -35,7 +37,8 @@ class TrainBase():
             valid_dataloader = DataLoader(valid_dataset, batch_size, shuffle=False, drop_last=True)
 
             self.init_param()
-
+            
+            # そのうちtrainとvalidで別関数化する
             study_func(train_dataloader, valid_dataloader)
 
             self.train_loss += self.train_loss / kf.n_splits
@@ -68,11 +71,24 @@ class ClassifierTrain(TrainBase):
         self.dataset = dataset
         self.batch_size = batch_size
 
-    def train(self):
+    def train(self, early_stopping=None):
+        """訓練するmethod
+
+        Parameters
+        ----------
+        early_stopping : instance, optional
+            Early stoppingを行う際はEarlyStoppingのinstanceを渡す, by default None
+        """
         for epoch in range(self.epochs):
             self.kfold_cross_validation(self.dataset, self.batch_size, epoch, self.study)
 
+            early_stopping(self.train_loss, self.model)
+            if early_stopping.early_stop:
+                print("Early Stopping!")
+                break
+
     def study(self, train_dataloader, valid_dataloader):
+
         self.model.train()
         for input, labels in train_dataloader:
             input, labels = input.to(self.device), labels.to(self.device)
