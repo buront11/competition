@@ -30,5 +30,7 @@ def main():
     do_train = ClassifierTrain(model, optimizer, criterion, epochs, dataset, batch_size)
     do_train.train()
 
+    do_train.save_weight('./weight')
+
 if __name__=='__main__':
     main()

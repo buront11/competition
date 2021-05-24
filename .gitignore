@@ -144,3 +144,7 @@ test
 
 # tasks data
 data/bitcoin/
+
+# weight
+weight
+

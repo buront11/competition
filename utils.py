@@ -9,6 +9,7 @@ import pandas as pd
 
 import os
 import json
+import subprocess
 
 class EarlyStopping:
     """earlystoppingクラス"""
@@ -77,6 +78,15 @@ def gen_hyper_param_template(save_dir, **kwargs):
         json.dump(template_dict,f)
 
 def update_json(json_file, dict):
+    """jsonファイルをupdateするプログラム
+    
+    Parameters
+    ----------
+    json_file : str
+        jsonファイルのpath
+    dict : dict
+        追加もしくは更新したいdict
+    """
     with open(json_file) as f:
         df = json.load(f)
 
@@ -143,3 +153,14 @@ def concat_csv(csv_paths,add_type=False):
             df_concat = pd.concat([df_concat,df_add])
 
     return df_concat
+
+# gitのversionを吐くプログラム
+
+def get_gpu_info(nvidia_smi_path='nvidia-smi', keys='utilization.gpu', no_units=True):
+    nu_opt = '' if not no_units else ',nounits'
+    cmd = '%s --query-gpu=%s --format=csv,noheader%s' % (nvidia_smi_path, ','.join(keys), nu_opt)
+    output = subprocess.check_output(cmd, shell=True)
+    lines = output.decode().split('\n')
+    lines = [ line.strip() for line in lines if line.strip() != '' ]
+
+    gpu_info =  [{ k: v for k, v in zip(keys, line.split(', ')) } for line in lines]

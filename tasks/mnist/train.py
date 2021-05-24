@@ -26,7 +26,7 @@ def main():
     train = ClassifierTrain(model=model, optim=optimizer, criterion=criterion, epochs=30, dataset=dataset, batch_size=100)
     train.train()
 
-    train.save_weight('.')
+    train.save_weight('./weight')
 
 if __name__=='__main__':
     main()
