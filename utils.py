@@ -10,6 +10,20 @@ import pandas as pd
 import os
 import json
 
+def gen_hyper_param_template(save_dir, **kwargs):
+    """hyper parameter.jsonのtemplateを作成するプログラム
+    kwardsに任意の引数を与えることであらかじめ追加することが可能
+
+    Parameters
+    ----------
+    save_dir : string
+        保存先のディレクトリ
+    """
+    template_dict = {kwargs}
+
+    with open(save_dir+"/hyper_paramter.json", 'w') as f:
+        json.dump(template_dict,f)
+
 def update_json(json_file, dict):
     with open(json_file) as f:
         df = json.load(f)

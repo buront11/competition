@@ -15,7 +15,7 @@ class TrainBase():
         self.optimizer = optim
         self.criterion = criterion
         self.epochs = epochs
-        self.device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         self.model = self.model.to(self.device)
         self.train_loss = 0
         self.valid_loss = 0
@@ -58,6 +58,9 @@ class TrainBase():
         self.valid_total = 0
         self.train_correct = 0
         self.valid_correct = 0
+
+    def save_weight(self, save_path):
+        torch.save(self.model.state_dict(), save_path)
 
 class ClassifierTrain(TrainBase):
     def __init__(self, model, optim, criterion, epochs, dataset, batch_size):
