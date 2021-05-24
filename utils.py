@@ -1,10 +1,23 @@
 import torch
+from torch.utils.data import Dataset, DataLoader
+from torch.utils.data.dataset import Subset
+from sklearn.model_selection import KFold
 
 import seaborn as sns
 
 import pandas as pd
 
 import os
+import json
+
+def update_json(json_file, dict):
+    with open(json_file) as f:
+        df = json.load(f)
+
+    df.update(dict)
+
+    with open(json_file, 'w') as f:
+        json.dump(df, f, indent=4)
 
 def get_flights_dataset():
     flight_data = sns.load_dataset("flights")

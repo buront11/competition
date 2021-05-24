@@ -14,3 +14,7 @@ scipy==1.6.2
 seaborn==0.11.1
 six==1.15.0
 threadpoolctl==2.1.0
+torch==1.8.1
+torchaudio==0.8.1
+torchvision==0.9.1
+typing-extensions==3.10.0.0

@@ -12,7 +12,6 @@ class LSTMPrediction(nn.Module):
 
         self.linear = nn.Linear(hidden_size, output_size)
 
-
     def forward(self,inputs, hidden_cell=None):
         # inputを[batch size, seq_len, feature dim]の3次元データに変換
         lstm_out, (hidden, cell) = self.lstm(inputs.view(self.batch_size, inputs.size(1), self.feature_dim), hidden_cell)

@@ -134,3 +134,13 @@ dmypy.json
 
 # mac setting
 .DS_Store
+
+# mnist data is large
+data/mnist/
+
+# train test data must be in local
+train
+test
+
+# tasks data
+data/bitcoin/
