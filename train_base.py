@@ -6,8 +6,11 @@ from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.dataset import Subset
 from sklearn.model_selection import KFold, StratifiedKFold
 
+import numpy as np
 from tqdm import tqdm
 from collections import OrderedDict
+
+from tqdm.std import TqdmDeprecationWarning
 
 from utils import EarlyStopping
 
@@ -54,10 +57,11 @@ class TrainBase():
         print("valid loss: {}".format(self.valid_loss))
         print("valid acc : {}".format(self.valid_correct/self.valid_total))
 
-    def stratified_kfold(self, dataset, batch_size, epoch, study_func, n_splits=2):
-        skf = StratifiedKFold(n_splits)
+    def stratified_kfold(self, dataset, input_data, label_data, batch_size, epoch, study_func, n_splits=2):
+        skf = StratifiedKFold(n_splits=n_splits)
 
-        for _fold, (train_index, valid_index) in enumerate(skf.split(dataset)):
+        for _fold, (train_index, valid_index) in enumerate(skf.split(input_data, label_data)):
+
             train_dataset = Subset(dataset, train_index)
             train_dataloader = DataLoader(train_dataset, batch_size, shuffle=True, drop_last=True)
             valid_dataset   = Subset(dataset, valid_index)

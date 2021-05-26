@@ -28,7 +28,8 @@ def preprocess():
     train_dataset = preprocess_base.tensor_dataset(train_input, train_label)
     test_dataset = [[i,j] for i , j in zip(test_index, test_input)]
 
-    joblib.dump(train_dataset,'../../data/advitisement/train')
+    joblib.dump(train_dataset, '../../data/advitisement/train')
+    joblib.dump([train_input, train_label],'../../data/advitisement/train_split')
     joblib.dump(test_dataset,'../../data/advitisement/test')
 
     utils.update_json('./hyper_parameters.json', {'input_dim':input_dim})

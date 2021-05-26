@@ -144,6 +144,7 @@ test
 
 # tasks data
 data/bitcoin/
+data/advitisement/
 
 # weight
 weight
