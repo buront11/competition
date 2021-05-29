@@ -1,6 +1,7 @@
 alembic==1.6.2
 attrs==21.2.0
 certifi==2020.12.5
+click==8.0.1
 cliff==3.7.0
 cmaes==0.8.2
 cmd2==1.5.0
@@ -29,13 +30,17 @@ PyYAML==5.4.1
 scikit-learn==0.24.1
 scipy==1.6.2
 seaborn==0.11.1
+signate==0.9.8
 six==1.15.0
 SQLAlchemy==1.4.15
 stevedore==3.3.0
+tabulate==0.8.9
 threadpoolctl==2.1.0
 torch==1.8.1
 torchaudio==0.8.1
 torchvision==0.9.1
 tqdm==4.60.0
 typing-extensions==3.10.0.0
+urllib3==1.26.5
 wcwidth==0.2.5
+wget==3.2
