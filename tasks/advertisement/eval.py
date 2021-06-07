@@ -31,10 +31,11 @@ class Eval(EvalBase):
             result.append([index.item(),predicted.item()])
 
         index, value = zip(*result)
+        print(index[0])
+        print(value[0])
         df = pd.Series(value, index=index)
-        print(df)
 
-        df.to_csv('submit.csv')
+        df.to_csv('submit.csv',header=False)
 
 def main():
     with open('./hyper_parameters.json') as f:
