@@ -146,6 +146,7 @@ test
 data/bitcoin/
 data/advitisement/
 data/buildings/*
+data/house/*
 
 # weight
 weight
